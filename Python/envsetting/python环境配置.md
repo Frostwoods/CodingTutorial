@@ -1,4 +1,4 @@
-python版本3.6.8
+python版本>3.6
  
  tensorflow
  scipy

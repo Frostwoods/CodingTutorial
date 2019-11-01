@@ -7,6 +7,7 @@ import unittest
 from ddt import ddt, data, unpack
 import numpy as np
 from filterTraj import *
+# import filterTraj as targetCode
 
 @ddt
 class TestFilterFunctions(unittest.TestCase):
@@ -28,8 +29,9 @@ class TestFilterFunctions(unittest.TestCase):
   def testCalculateIncludedAngle(self,v1,v2,groundTruthAngle):
     #pass
     angle=calculateIncludedAngle(v1,v2)
-    truthValue = np.array_equal(angle,groundTruthAngle)
+    truthValue = np.array_equal(angle,groundTruthAngle)    
     self.assertTrue(truthValue) 
+
   @data(((0,1),(2,1),False),\
         ((0.5,1),(0.6,-2),True),\
         ((0.5,0),(0.6,0),True),\
@@ -149,9 +151,9 @@ class TestFilterFunctions(unittest.TestCase):
         [[[8, 1], [4, 9],[3, 9]]],\
         [[[1, 5], [4, 10],[3, 10]]]]
     spaceSize=10
-    countSheepInCorner=CountSheepInCorner(self.sheepId,self.stateIndex, self.positionIndex,spaceSize,cornerSize,isInCorner)
-    cornerRatio=countSheepInCorner(np.array(traj))
-    truthValue = np.array_equal(cornerRatio,groundTruthCornerRatio)
+    countWolfInCorner=CountSheepInCorner(self.sheepId,self.stateIndex, self.positionIndex,spaceSize,cornerSize,isInCorner)
+    wolfCornerRatio=countWolfInCorner(np.array(traj))
+    truthValue = np.array_equal(wolfCornerRatio,groundTruthCornerRatio)
     self.assertTrue(truthValue)
 
   @data((100,1),\

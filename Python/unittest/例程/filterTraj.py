@@ -105,7 +105,11 @@ def isCrossAxis(v1,v2):
             return False ##debug not Ture
     crossX=-y1*(x2-x1)/(y2-y1)+x1
     return  (crossX<1 and crossX>0 and y1*y2<0)
-
+class ClassName:
+    def __init__(self, arg):
+        super(ClassName, self).__init__()
+        self.arg = arg
+        
 class CountSheepInCorner :
     def __init__(self,sheepId,stateIndex, positionIndex,spaceSize,cornerSize,isInCorner):
         self.sheepId =sheepId  
@@ -117,6 +121,7 @@ class CountSheepInCorner :
     def __call__(self,traj):
 
         sheepCoordinateList = [traj[i][self.stateIndex][self.sheepId][self.positionIndex] for i in range(len(traj))]
+
         cornerList=[self.isInCorner(self.spaceSize-self.cornerSize,coor) for coor in sheepCoordinateList]
         cornerNumber=len(np.where(cornerList)[0])
         cornerRatio = cornerNumber/ len(traj)
@@ -142,5 +147,5 @@ class CountCollision :
         collisionRatio = collisionNumber / len(traj)
         return collisionRatio
 
-def isCollision (coor1,coor2,disttance):
-    return np.linalg.norm(coor1-coor2) < disttance   
+def isCollision (coor1,coor2,distance):
+    return np.linalg.norm(coor1-coor2) < distance   
