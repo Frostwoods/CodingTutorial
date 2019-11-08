@@ -20,7 +20,6 @@ class TestFilterFunctions(unittest.TestCase):
     self.positionIndex=[0,1]
     self.timeWindow=6
     self.maxCircleNumber=3
-  
 
   @data(((0,1),(1,0),np.pi/2),\
         ((0,1),(0,2),0),\
