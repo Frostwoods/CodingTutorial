@@ -14,9 +14,10 @@ class TestAnalysisFunctions(unittest.TestCase):
     def setUp(self):
         self.testParameter = 0
 
-    @data(((0, 0, 0, 0, 0, 0), 'Did not make a commitment'), \
-          ((0, 0, 1, 1, 0, 1, 2, 1), 'No'), \
-          ((0, 0, 0, 0, 0, 0, 0, 0, 0, 2), 'Yes'))
+    @data(((0, 0, 0, 0, 0, 0), 00), \
+          ((0, 0, 1, 1, 0, 1, 1, 1), 1), \
+          ((0, 0, 1, 1, 0, 2, 2, 1), 0), \
+          ((0, 1, 1, 0, 0, 2, 2, 0, 2), 0))
     @unpack
     def testCalculateGoalCommit(self, goalList, groundTruthAnswer):
         # pass
@@ -25,7 +26,7 @@ class TestAnalysisFunctions(unittest.TestCase):
         self.assertTrue(truthValue)
 
     @data(((0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 0.0), \
-          ((2, 0, 1, 1, 0, 1, 1, 1, 1, 1), 0.1), \
+          ((2, 0, 1, 1, 0, 1, 1, 1, 1, 2), 0.1), \
           ((0, 0, 0, 0, 0, 0, 0, 0, 0, 2), 1.0))
     @unpack
     def testCalculateFirstIntentStep(self, goalList, groundTruthRatio):

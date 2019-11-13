@@ -10,21 +10,24 @@ def calculateGoalCommit(goalList):
     numGoal1 = len(goal1Step)
     numGoal2 = len(goal2Step)
     if (numGoal1 != 0 and numGoal2 == 0) or (numGoal2 != 0 and numGoal1 == 0):
-        isGoalCommit = 'Yes'
+        isGoalCommit = 1
     elif numGoal1 != 0 and numGoal2 != 0:
-        isGoalCommit = 'No'
+        isGoalCommit = 0
     else:
-        isGoalCommit = 'Did not make a commitment'
+        isGoalCommit = 00
     return isGoalCommit
 
 
 def calculateFirstIntentStep(goalList):
-    firstIntent = 0
-    if 1 in goalList:
-        firstIntent = goalList.index(1) + 1
-    if 2 in goalList:
-        firstIntent = goalList.index(2) + 1
-    firstIntentStepRatio = firstIntent / len(goalList)
+    intent1 = goalList.index(1) + 1 if 1 in goalList else 99
+    intent2 = goalList.index(2) + 1 if 2 in goalList else 99
+    if intent1 < intent2:
+        firstIntentStep=intent1
+    elif intent2 < intent1:
+        firstIntentStep=intent2
+    else:
+        firstIntentStep =0
+    firstIntentStepRatio = firstIntentStep / len(goalList)
     return firstIntentStepRatio
 
 
