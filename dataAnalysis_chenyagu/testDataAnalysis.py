@@ -1,12 +1,7 @@
-import os
-import sys
 import numpy as np
 import unittest
 from ddt import ddt, data, unpack
 from dataAnalysis import *
-
-DIRNAME = os.path.dirname(__file__)
-sys.path.append(os.path.join(DIRNAME))
 
 
 @ddt
@@ -14,10 +9,20 @@ class TestAnalysisFunctions(unittest.TestCase):
     def setUp(self):
         self.testParameter = 0
 
-    @data(((0, 0, 0, 0, 0, 0), 00), \
-          ((0, 0, 1, 1, 0, 1, 1, 1), 1), \
-          ((0, 0, 1, 1, 0, 2, 2, 1), 0), \
-          ((0, 1, 1, 0, 0, 2, 2, 0, 2), 0))
+    @data((('0, 0, 0, 0, 0, 0, 0, 0, 0, 0'), 0.0), \
+          (('2, 0, 1, 1, 0, 1, 1, 1, 1, 2'), 0.1), \
+          (('0, 0, 0, 0, 0, 0, 0, 0, 0, 2'), 1.0))
+    @unpack
+    def testCalculateFirstIntentStepRatio(self, goalList, groundTruthRatio):
+        # pass
+        firstIntentStepRatio = calculateFirstIntentStepRatio(goalList)
+        truthValue = np.array_equal(firstIntentStepRatio, groundTruthRatio)
+        self.assertTrue(truthValue)
+
+    @data((('0, 0, 0, 0, 0, 0'), 1), \
+          (('0, 0, 1, 1, 0, 1, 1, 1'), 1), \
+          (('0, 0, 1, 1, 0, 2, 2, 1'), 0), \
+          (('0, 1, 1, 0, 0, 2, 2, 0, 2'), 0))
     @unpack
     def testCalculateGoalCommit(self, goalList, groundTruthAnswer):
         # pass
@@ -25,14 +30,23 @@ class TestAnalysisFunctions(unittest.TestCase):
         truthValue = np.array_equal(isGoalCommit, groundTruthAnswer)
         self.assertTrue(truthValue)
 
-    @data(((0, 0, 0, 0, 0, 0, 0, 0, 0, 0), 0.0), \
-          ((2, 0, 1, 1, 0, 1, 1, 1, 1, 2), 0.1), \
-          ((0, 0, 0, 0, 0, 0, 0, 0, 0, 2), 1.0))
+    @data(('5', ' 4', ('[6, 7], [5, 7], [5, 6], [5, 5], [5, 4]'), 1), \
+          ('4', ' 8', ('[8, 6], [8, 7], [8, 8], [9, 8], [10, 8]'), 2))
     @unpack
-    def testCalculateFirstIntentStep(self, goalList, groundTruthRatio):
+    def testCalculateFinalGoal(self, bean1GridX, bean1GridY, trajectory, groundTruthAnswer):
         # pass
-        firstIntentStepRatio = calculateFirstIntentStep(goalList)
-        truthValue = np.array_equal(firstIntentStepRatio, groundTruthRatio)
+        finalGoal = calculateFinalGoal(bean1GridX, bean1GridY, trajectory)
+        truthValue = np.array_equal(finalGoal, groundTruthAnswer)
+        self.assertTrue(truthValue)
+
+    @data((1, ('0, 0, 0, 0, 0, 0, 1, 1, 2'), 1), \
+          (1, ('0, 0, 0, 0, 0, 0, 2, 1, 1'), 0), \
+          (1, ('0, 0, 0, 0, 0, 0, 0, 0, 0'), 1))
+    @unpack
+    def testCalculateIntentGoalAccord(self, finalGoal, goalList, groundTruthAnswer):
+        # pass
+        isIntentGoalAccord = calculateIntentGoalAccord(finalGoal, goalList)
+        truthValue = np.array_equal(isIntentGoalAccord, groundTruthAnswer)
         self.assertTrue(truthValue)
 
     @data(((2544, 2785, 3025, 3219, 3443, 3718, 4062, 4392, 5170, 5474), [9]), \
