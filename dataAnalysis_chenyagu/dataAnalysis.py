@@ -7,7 +7,7 @@ def calculateFirstIntentStep(goalList):
     elif intent2 < intent1:
         firstIntentStep = intent2
     else:
-        firstIntentStep = 0
+        firstIntentStep = len(goalList)
     return firstIntentStep
 
 
@@ -34,27 +34,34 @@ def calculateGoalCommit(goalList):
 def calculateFinalGoal(bean1GridX, bean1GridY, trajectory):
     trajectory = eval(trajectory)
     finalStep = trajectory[len(trajectory) - 1]
-    if finalStep[0] == eval(bean1GridX) and finalStep[1] == eval(bean1GridY):
+    if finalStep[0] == bean1GridX and finalStep[1] == bean1GridY:
         finalGoal = 1
     else:
         finalGoal = 2
     return finalGoal
 
 
-def calculateIntentGoalAccord(finalGoal, goalList):
+def calculateFirstIntentGoalAccord(finalGoal, goalList):
     firstIntentStep = calculateFirstIntentStep(goalList)
-    if firstIntentStep != 0:
+    if firstIntentStep != len(eval(goalList)):
         firstIntent = eval(goalList)[firstIntentStep - 1]
         if firstIntent == finalGoal:
-            isIntentGoalAccord = 1
+            isFirstIntentGoalAccord = 1
         else:
-            isIntentGoalAccord = 0
+            isFirstIntentGoalAccord = 0
     else:
-        isIntentGoalAccord = 1
-    return isIntentGoalAccord
+        isFirstIntentGoalAccord = 1
+    return isFirstIntentGoalAccord
 
 
-def calculateMaxReactionTimeStep(timeList):
+def calculateIsTimeMaxNextNoise(timeList, noisePoint):
+    timeList = eval(timeList)
+    noisePoint = eval(noisePoint)
+    noisePointNextStep = [i + 1 for i in noisePoint]
     timeGap = [timeList[i + 1] - timeList[i] for i in range(len(timeList) - 1)]
-    maxReactionTimeStep = [i + 2 for i, x in enumerate(timeGap) if x == max(timeGap)]
-    return maxReactionTimeStep
+    maxReactTimeStep = [i + 2 for i, x in enumerate(timeGap) if x == max(timeGap)]
+    if [i for i in maxReactTimeStep if i in noisePointNextStep] != []:
+        isTimeMaxNextNoise = 1
+    else:
+        isTimeMaxNextNoise = 0
+    return isTimeMaxNextNoise
